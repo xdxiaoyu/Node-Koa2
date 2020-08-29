@@ -9,16 +9,27 @@ const app = new Koa()
 
 
 // 注册
-app.use((ctx,next) => {
+app.use(async(ctx,next) => {
   // 上下文
   console.log(1);
-  next()
+  const a = await next()
+  // 求值关键字 表达式 不仅仅是Promise
+  // a.then(res => {
+  //   console.log(res);
+  // })
+  // console.log(a);
   console.log(2);
 })
 
 app.use((ctx,next) => {
-  console.log(3);
-  console.log(4);
+  // console.log(3);
+  const axios = require('axios')
+  const start = Date.now()
+  const res = axios.get("http://7yue.pro")
+  const end = Date.now()
+  console.log(end-start);
+  // console.log(4);
+  // return 'hello xiaoyu'
 })
 
 app.listen(3000)
