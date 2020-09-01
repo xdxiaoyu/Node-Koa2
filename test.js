@@ -1,25 +1,11 @@
 /*
- * @Descripttion: 
- * @version: 
- * @Author: dxiaoxing
- * @Date: 2020-08-31 09:12:24
- * @LastEditors: dxiaoxing
- * @LastEditTime: 2020-08-31 10:23:25
- */
 async function f1() {
   return 'hello'
 }
 // async 返回一个Promise对象  --异步的终极解决方案
 
 console.log(f1());
-/*
- * @Descripttion: 
- * @version: 
- * @Author: dxiaoxing
- * @Date: 2020-08-28 14:55:44
- * @LastEditors: dxiaoxing
- * @LastEditTime: 2020-08-31 10:11:09
- */
+
 const Koa = require('koa') // import from 实验特性，无法直接在node当中使用
 
 // 应用程序对象 中间件
@@ -58,3 +44,39 @@ app.use(async(ctx,next) => {
 
 // 保证中间件按洋葱模型执行的先决条件是，每一个next前面都有增加一个async
 app.listen(3000)
+*/
+
+
+
+
+// 机制 监听任何异常
+
+// 函数设计
+// 判断异常 return false null
+// throw new Error 编程规范
+
+function fun1() {
+    fun2()
+}
+async function fun2() {
+    try {
+      fun3()
+    } catch (error) {
+      console.log('error')
+    }
+}
+function fun3() {
+  // 异步操作无法捕获到异常，同步可以捕捉
+  // 
+  return new Promise((resolve,reject) => {
+    setTimeout(() => {
+      const r = Math.random()
+      if(r<0.5) {
+        reject('error')
+      }
+    })
+  })
+}
+
+// 代码大全
+fun1()
