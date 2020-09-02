@@ -4,7 +4,7 @@
  * @Author: dxiaoxing
  * @Date: 2020-08-31 13:59:07
  * @LastEditors: dxiaoxing
- * @LastEditTime: 2020-09-01 13:59:51
+ * @LastEditTime: 2020-09-02 09:03:46
  */
 const requireDirectory = require("require-directory");
 const Router = require("koa-router");
@@ -19,6 +19,7 @@ class InitManger {
   }
 
   static loadConfig(path = '') {
+    // 全局写入配置文件
     const configPath = path || process.cwd() + '/config/config.js'
     const config = require(configPath)
     global.config = config
@@ -26,6 +27,7 @@ class InitManger {
 
   static initLoadRouters() {
     const apiDirectory = `${process.cwd()}/app/api`
+    // 路由自动挂载
     requireDirectory(module, apiDirectory, { visit: whenLoadModule });
     function whenLoadModule(obj) {
       if (obj instanceof Router) {
