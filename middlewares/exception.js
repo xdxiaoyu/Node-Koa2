@@ -4,7 +4,7 @@
  * @Author: dxiaoxing
  * @Date: 2020-09-01 09:15:15
  * @LastEditors: dxiaoxing
- * @LastEditTime: 2020-09-01 11:22:25
+ * @LastEditTime: 2020-09-03 19:04:53
  */
 const { HttpException } = require('../core/http-exception')
 
@@ -14,7 +14,9 @@ const catchError = async (ctx, next) => {
   } catch (error) {
     // 成产环境
     // 开发环境
-    if(global.config.environment === 'dev') {
+    const isHttpException = error instanceof HttpException
+    const isDev = global.config.environment === 'dev'
+    if(isDev && !isHttpException) {
       throw error
     }
     // error 堆栈调用信息
