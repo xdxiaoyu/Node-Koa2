@@ -4,11 +4,13 @@
  * @Author: dxiaoxing
  * @Date: 2020-09-02 09:09:58
  * @LastEditors: dxiaoxing
- * @LastEditTime: 2020-09-02 13:55:28
+ * @LastEditTime: 2020-09-07 17:39:57
  */
+const bcrypt = require('bcryptjs')
+const { Sequelize, Model } = require('sequelize')
+
 const { sequelize } = require('../../core/db')
 
-const { Sequelize, Model } = require('sequelize')
 
 class User extends Model {
 
@@ -22,8 +24,18 @@ User.init({ // mysql 一种类型
     autoIncrement: true
   },
   nickname: Sequelize.STRING,
-  email: Sequelize.STRING,
-  password: Sequelize.STRING,
+  email: {
+    type: Sequelize.STRING(128),
+    unique: true
+  },
+  password: {
+    type: Sequelize.STRING,
+    set(val) {
+      const salt = bcrypt.genSaltSync(10) // 位数， 成本
+      const psw = bcrypt.hashSync(val,salt)
+      this.setDataValue('password',psw)
+    }
+  },
   openid: {
     type: Sequelize.STRING(64),
     unique: true
@@ -33,3 +45,7 @@ User.init({ // mysql 一种类型
   sequelize,
   tableName: 'user'
 })
+
+module.exports ={
+  User
+}

@@ -4,14 +4,14 @@
  * @Author: dxiaoxing
  * @Date: 2020-08-28 14:55:44
  * @LastEditors: dxiaoxing
- * @LastEditTime: 2020-09-02 11:17:32
+ * @LastEditTime: 2020-09-07 14:05:57
  */
 const Koa = require('koa')
 const parser = require('koa-bodyparser')
 const InitManger = require('./core/init.js')
 const catchError = require('./middlewares/exception')
 
-require('./app/models/user')
+// require('./app/models/user')
 
 
 const app = new Koa()

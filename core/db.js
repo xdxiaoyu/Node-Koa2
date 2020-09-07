@@ -4,7 +4,7 @@
  * @Author: dxiaoxing
  * @Date: 2020-09-01 15:24:30
  * @LastEditors: dxiaoxing
- * @LastEditTime: 2020-09-02 13:51:21
+ * @LastEditTime: 2020-09-07 17:39:07
  */
 const Sequelize = require('sequelize')
 const {
@@ -32,8 +32,9 @@ const sequelize = new Sequelize(dbName, user, password, {
   }
 })
 
+// true 强制同步-删除同名数据表后同步，谨慎使用，会导致数据丢失
 sequelize.sync({
-  force: true
+  force: false
 })
 
 module.exports = {
