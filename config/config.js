@@ -4,7 +4,7 @@
  * @Author: dxiaoxing
  * @Date: 2020-09-01 11:16:28
  * @LastEditors: dxiaoxing
- * @LastEditTime: 2020-09-02 11:28:42
+ * @LastEditTime: 2020-09-09 14:49:34
  */
 module.exports ={
   environment: 'dev',
@@ -14,5 +14,10 @@ module.exports ={
     port: 3306,
     user: 'root',
     password: '123456'
+  },
+  security: {
+    // 如果这个key丢失，别人可以破解你的jwt令牌
+    secertKey: 'abcdefg', 
+    expiresIn: 60*60*24*30
   }
 }

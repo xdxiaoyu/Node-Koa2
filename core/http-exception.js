@@ -4,7 +4,7 @@
  * @Author: dxiaoxing
  * @Date: 2020-09-01 09:49:53
  * @LastEditors: dxiaoxing
- * @LastEditTime: 2020-09-07 17:09:58
+ * @LastEditTime: 2020-09-09 10:47:35
  */
 class HttpException extends Error {
   constructor(msg = '服务器错误', errorCode = 10000, code = 400) {
@@ -33,4 +33,28 @@ class Success extends HttpException {
   }
 }
 
-module.exports = { HttpException, ParameterException, Success }
+class NotFound extends HttpException {
+  constructor(msg, errorCode) {
+    super()
+    this.code = 404
+    this.msg = msg || '资源未找到'
+    this.errorCode = errorCode || 10000
+  }
+}
+
+class AuthFailed extends HttpException {
+  constructor(msg, errorCode) {
+    super()
+    this.code = 401
+    this.msg = msg || '授权失败'
+    this.errorCode = errorCode || 10004
+  }
+}
+
+module.exports = {
+  HttpException,
+  ParameterException,
+  Success,
+  NotFound,
+  AuthFailed
+}
