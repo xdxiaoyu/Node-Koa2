@@ -4,9 +4,10 @@
  * @Author: dxiaoxing
  * @Date: 2020-09-09 14:44:53
  * @LastEditors: dxiaoxing
- * @LastEditTime: 2020-09-09 18:20:16
+ * @LastEditTime: 2020-09-09 18:42:53
  */
 const basicAuth = require('basic-auth')
+const jwt = require('jsonwebtoken')
 class Auth {
   constructor() {
 
@@ -15,13 +16,24 @@ class Auth {
   get m() {
     return async (ctx,next) => {
       const userToken = basicAuth(ctx.req)
+      let errMsg = 'token不合法'
       if(!userToken || !userToken.name) {
-        
+        throw new global.errs.Forbbiden(errMsg)
       }
-      ctx.body = token
-      // token检测
-      // token 开发者 传递令牌
-      // HTTP 规定 身份验证机制 HttpBasicAuth
+      try {
+        var decode = jwt.verify(userToken.name, global.config.security.secertKey)
+      } catch (error) {
+        if(error.name == 'TokenExpiredError') {
+          errMsg = 'token已过期'
+        }
+          throw new global.errs.Forbbiden(errMsg)
+      }
+      // ctx.body = token
+      ctx.auth = {
+        uid: decode.uid,
+        scope: decode.scope
+      }
+      await next()
     }
   }
 }

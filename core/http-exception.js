@@ -4,7 +4,7 @@
  * @Author: dxiaoxing
  * @Date: 2020-09-01 09:49:53
  * @LastEditors: dxiaoxing
- * @LastEditTime: 2020-09-09 10:47:35
+ * @LastEditTime: 2020-09-09 18:24:14
  */
 class HttpException extends Error {
   constructor(msg = '服务器错误', errorCode = 10000, code = 400) {
@@ -51,10 +51,20 @@ class AuthFailed extends HttpException {
   }
 }
 
+class Forbbiden extends HttpException {
+  constructor(msg, errorCode) {
+    super()
+    this.code = 403
+    this.msg = msg || '禁止访问'
+    this.errorCode = errorCode || 10006
+  }
+}
+
 module.exports = {
   HttpException,
   ParameterException,
   Success,
   NotFound,
-  AuthFailed
+  AuthFailed,
+  Forbbiden
 }

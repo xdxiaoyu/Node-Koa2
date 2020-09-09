@@ -4,7 +4,7 @@
  * @Author: dxiaoxing
  * @Date: 2020-08-31 11:24:10
  * @LastEditors: dxiaoxing
- * @LastEditTime: 2020-09-09 18:17:25
+ * @LastEditTime: 2020-09-09 18:40:13
  */
 const Router = require('koa-router')
 
@@ -21,7 +21,7 @@ router.get('/latest', new Auth().m, async (ctx, next) => {
   const query = ctx.request.query
   const headers = ctx.request.header
   const body = ctx.request.body
-  ctx.body = { key: 'classic' }
+  ctx.body = ctx.auth.uid
   // AOP 面向切面编程
   // 监听错误
   // 输出提示一段有意义的信息
