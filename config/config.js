@@ -4,7 +4,7 @@
  * @Author: dxiaoxing
  * @Date: 2020-09-01 11:16:28
  * @LastEditors: dxiaoxing
- * @LastEditTime: 2020-09-09 14:49:34
+ * @LastEditTime: 2020-09-10 18:56:43
  */
 module.exports ={
   environment: 'dev',
@@ -19,5 +19,10 @@ module.exports ={
     // 如果这个key丢失，别人可以破解你的jwt令牌
     secertKey: 'abcdefg', 
     expiresIn: 60*60*24*30
+  },
+  wx: {
+    appId:'',
+    appSecret: '',
+    loginUrl: ''
   }
 }

@@ -4,13 +4,16 @@
  * @Author: dxiaoxing
  * @Date: 2020-09-09 14:44:53
  * @LastEditors: dxiaoxing
- * @LastEditTime: 2020-09-09 18:42:53
+ * @LastEditTime: 2020-09-10 18:44:18
  */
 const basicAuth = require('basic-auth')
 const jwt = require('jsonwebtoken')
 class Auth {
-  constructor() {
-
+  constructor(level) {
+    this.level = level || 1
+    Auth.USER = 8
+    Auth.ADMIN = 16
+    Auth.SUPER_ADMIN = 32
   }
 
   get m() {
@@ -28,6 +31,12 @@ class Auth {
         }
           throw new global.errs.Forbbiden(errMsg)
       }
+
+      if(decode.scope < this.level) {
+        errMsg = "权限不足"
+        throw new global.errs.Forbbiden(errMsg)
+      }
+
       // ctx.body = token
       ctx.auth = {
         uid: decode.uid,
