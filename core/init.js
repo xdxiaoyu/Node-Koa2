@@ -4,7 +4,7 @@
  * @Author: dxiaoxing
  * @Date: 2020-08-31 13:59:07
  * @LastEditors: dxiaoxing
- * @LastEditTime: 2020-09-02 09:03:46
+ * @LastEditTime: 2020-09-11 13:55:07
  */
 const requireDirectory = require("require-directory");
 const Router = require("koa-router");
@@ -43,4 +43,4 @@ class InitManger {
   }
 }
 
-module.exports = InitManger;
+  module.exports = InitManger;

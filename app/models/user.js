@@ -4,7 +4,7 @@
  * @Author: dxiaoxing
  * @Date: 2020-09-02 09:09:58
  * @LastEditors: dxiaoxing
- * @LastEditTime: 2020-09-09 11:14:18
+ * @LastEditTime: 2020-09-11 10:36:30
  */
 const bcrypt = require('bcryptjs')
 const { Sequelize, Model } = require('sequelize')
@@ -29,6 +29,21 @@ class User extends Model {
       throw new global.errs.AuthFailed('密码不正确')
     }
     return user
+  }
+
+  static async getUserByOpenid(openid) {
+    const user = User.findOne({
+      where:{
+        openid
+      }
+    })
+    return user
+  }
+
+  static async registerByOpenid(openid) {
+    return await User.create({
+      openid
+    })
   }
 }
 

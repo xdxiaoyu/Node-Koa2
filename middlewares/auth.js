@@ -4,7 +4,7 @@
  * @Author: dxiaoxing
  * @Date: 2020-09-09 14:44:53
  * @LastEditors: dxiaoxing
- * @LastEditTime: 2020-09-10 18:44:18
+ * @LastEditTime: 2020-09-11 13:46:03
  */
 const basicAuth = require('basic-auth')
 const jwt = require('jsonwebtoken')
@@ -43,6 +43,15 @@ class Auth {
         scope: decode.scope
       }
       await next()
+    }
+  }
+
+  static veriftyToken(token) {
+    try {
+      jwt.verify(userToken.name, global.config.security.secertKey)
+      return true
+    } catch (error) {
+      return false
     }
   }
 }

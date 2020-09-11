@@ -4,13 +4,14 @@
  * @Author: dxiaoxing
  * @Date: 2020-09-08 16:00:35
  * @LastEditors: dxiaoxing
- * @LastEditTime: 2020-09-10 18:50:48
+ * @LastEditTime: 2020-09-11 13:48:28
  */
 const Router = require('koa-router')
 const { LoginType } = require('../../lib/enum')
 const { User } = require('../../models/user')
 const { generateToken } = require('../../../core/util')
 const { Auth } = require('../../../middlewares/auth')
+const { WXManager } = require('../../services/wx')
 
 const router = new Router({
   prefix: '/v1/token'
@@ -31,6 +32,7 @@ router.post('/', async (ctx) => {
       token = await emailLogin(x.account, x.secret)
       break;
     case LoginType.USER_MINT_PROGRAM:
+      token = WXManager.codeToToKen(x.account)
       break;
     case LoginType.ADMIN_EMAIL:
       break;
@@ -40,6 +42,11 @@ router.post('/', async (ctx) => {
   ctx.body = {
     token
   }
+})
+
+router.post('/verify', async (ctx) => {
+  const x = ctx.request.body
+  Auth.veriftyToken(x.token)
 })
 
 async function emailLogin(account, secret) {
